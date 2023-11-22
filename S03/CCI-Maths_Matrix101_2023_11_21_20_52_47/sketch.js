@@ -8,7 +8,8 @@ function setup() {
 
 // Colour functions:
 function sweep(x, y, x_pos, y_pos) {
-  return (x + y == (frameCount % 60) ? color(255, 0, 0) : color(0))
+  return (math.evaluate("x + y == f mod 60", {x : x, y: y, f: frameCount}) ? color(255, 0, 0) : color(0))
+  //return (x + y == (frameCount % 60) ? color(255, 0, 0) : color(0))
   // Quiz: how to get fully across the diagonal?
 }
 
@@ -31,7 +32,15 @@ function draw() {
     for (let x of math.range(0, SIZE).toArray()) {
       let x_pos = map(x, 0, SIZE - 1, 0, width)
 
+      let v = math.evaluate("x > y or not(x == 3)", {x: x, y: y})
+      if (v) {
+        fill(255)
+      } else {
+        fill(0)
+      }
+
       fill(distance(x, y, x_pos, y_pos))
+      //fill(sweep(x, y, x_pos,y_pos))
       circle(x_pos, y_pos, 10)      
     }
   }
